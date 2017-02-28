@@ -79,6 +79,18 @@ app.get('/scrape', function(req, res) {
 	res.send('Scrape Complete');
 });
 
+// GET request to grap all articles from mongoDB
+app.get('/articles', function(req, res) {
+	Article.find({}, function(error, doc) {
+		if (error) {
+			console.log(error);
+		} else {
+			// Send the doc to browser as a json
+			res.json(doc);
+		}
+	});
+});
+
 app.listen(PORT, function() {
 	console.log('Listening on port: ' + PORT);
 });
