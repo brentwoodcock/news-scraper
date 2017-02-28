@@ -1,0 +1,31 @@
+{
+  "name": "news-scraper",
+  "version": "1.0.0",
+  "description": "This app will scrape news stories and allow uses to comment on articles. All information will be saved in a MongoDB database.",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brentwoodcock/news-scraper.git"
+  },
+  "keywords": [
+    "news"
+  ],
+  "author": "Brent Woodcock",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brentwoodcock/news-scraper/issues"
+  },
+  "homepage": "https://github.com/brentwoodcock/news-scraper#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "cheerio": "^0.22.0",
+    "express": "^4.14.1",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.8.5",
+    "request": "^2.79.0"
+  }
+}
