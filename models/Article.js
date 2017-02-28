@@ -7,11 +7,13 @@ var ArticleSchema = new Schema({
 	// article's title (required)
 	title: {
 		type: String,
-		required: true
+		required: true,
+		trim: true
 	},
 	// preview content of article
 	content: {
-		type: String
+		type: String,
+		trim: true
 	},
 	// article's URL (required)
 	link: {
