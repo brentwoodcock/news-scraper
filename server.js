@@ -66,7 +66,7 @@ app.get('/scrape', function(req, res) {
 
 			// Search database for matching articles
 			Article.findOne({'link': currArt.link}, function(findErr, result) {
-				if (err) {
+				if (findErr) {
 					console.log(findErr);
 				}
 				// Add new entry if article is not already in database
