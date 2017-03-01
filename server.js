@@ -57,21 +57,30 @@ app.get('/scrape', function(req, res) {
 		var $ = cheerio.load(html);
 		// Grab every h2 element with class 'node-title'
 		$('h2.node-title').each(function(i, element) {
-			// result is an object that will hold an individual article's info
-			var result = {};
+			// currArt is an object that will hold an individual article's info
+			var currArt = {};
 			// Grab desired info about each article
-			result.title = $(this).children('a').attr('title');
-			result.link = 'https://www.sciencenews.org' + $(this).children('a').attr('href');
-			result.content = $(this).parent().siblings('.content').text();
-			// Create a new entry using Article model
-			var entry = new Article(result);
+			currArt.title = $(this).children('a').attr('title');
+			currArt.link = 'https://www.sciencenews.org' + $(this).children('a').attr('href');
+			currArt.content = $(this).parent().siblings('.content').text();
 
-			// Save entry to db
-			entry.save(function(err, doc) {
+			// Search database for matching articles
+			Article.findOne({'link': currArt.link}, function(findErr, result) {
 				if (err) {
-					console.log(err);
+					console.log(findErr);
+				}
+				// Add new entry if article is not already in database
+				if(!result) {
+					var entry = new Article(currArt);
+					entry.save(function(err, doc) {
+						if (err) {
+							console.log(err);
+						} else {
+							// console.log(doc);
+						}
+					});
 				} else {
-					console.log(doc);
+					console.log("article already in")
 				}
 			});
 		});
