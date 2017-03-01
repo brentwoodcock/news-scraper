@@ -100,6 +100,42 @@ app.get('/articles', function(req, res) {
 	});
 });
 
+// GET request for specific article by id
+app.get('/articles/:id', function(req, res) {
+	Article.findOne({
+		'_id': req.params.id
+	})
+	.populate('comments')
+	.exec(function(error, doc) {
+		if (error) {
+			console.log(error);
+		} else {
+			res.json(doc);
+		}
+	});
+});
+
+// POST request to add a comment to an article by article's id
+app.post('/articles/:id', function(req, res) {
+	var newComment = new Comment(req.body);
+
+	newComment.save(function(error, doc) {
+		if (error) {
+			console.log(error);
+		} else {
+			console.log(doc);
+			Article.findOneAndUpdate({ '_id': req.params.id }, { $push: {'comments': doc._id} })
+			.exec(function(err, doc) {
+				if (err) {
+					console.log(err);
+				} else {
+					res.send(doc);
+				}
+			});
+		}
+	});
+});
+
 app.listen(PORT, function() {
 	console.log('Listening on port: ' + PORT);
 });
